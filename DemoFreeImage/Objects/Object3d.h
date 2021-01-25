@@ -10,6 +10,7 @@ private :
 public :
 	Object3d();
 	Vector3d getPosition();
+	virtual double getVolume() = 0;
 
 };
 

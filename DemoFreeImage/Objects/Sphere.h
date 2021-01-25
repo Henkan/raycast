@@ -10,6 +10,7 @@ private :
 	Sphere();
 public :
 	Sphere(Vector3d center, Vector3d radius);
+	double getVolume();
 
 };
 

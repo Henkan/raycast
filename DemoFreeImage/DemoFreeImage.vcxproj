@@ -159,6 +159,7 @@
     <ClCompile Include="Maths\Matrix.cpp" />
     <ClCompile Include="Objects\Sphere.cpp" />
     <ClCompile Include="Engine\Scene.cpp" />
+    <ClCompile Include="Objects\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Ray.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Objects\Object3d.cpp" />
     <ClInclude Include="Objects\Sphere.h" />
     <ClInclude Include="Engine\Scene.h" />
+    <ClInclude Include="Objects\Triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Object3d.h" />
