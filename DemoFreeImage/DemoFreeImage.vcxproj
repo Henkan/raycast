@@ -149,14 +149,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maths\Vector3d.cpp" />
     <ClCompile Include="Maths\Matrix.cpp" />
+    <ClCompile Include="Objects\Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Maths\Vector3d.h" />
     <ClInclude Include="Maths\Matrix.h" />
     <ClCompile Include="Objects\Object3d.cpp" />
+    <ClInclude Include="Objects\Sphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Object3d.h" />

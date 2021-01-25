@@ -1,11 +1,14 @@
 #pragma once
+#include "../Maths/Vector3d.h"
+
 class Object3d
 {
 private :
 	Vector3d position;
-	Object3d();
+	
 
 public :
+	Object3d();
 	Vector3d getPosition();
 
 };
