@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	FIBITMAP* image;
 	image = FreeImage_Allocate(256, 256, 32);
 
-
+	int a;
 	color.rgbGreen = 0;
 	for (size_t i = 0; i < 640; i++)
 	{
