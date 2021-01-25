@@ -150,6 +150,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maths\Vector3d.cpp" />
+    <ClCompile Include="Maths\Matrix.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Maths\Vector3d.h" />
+    <ClInclude Include="Maths\Matrix.h" />
     <ClCompile Include="Objects\Object3d.cpp" />
   </ItemGroup>
   <ItemGroup>
