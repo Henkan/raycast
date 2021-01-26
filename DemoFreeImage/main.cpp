@@ -2,6 +2,7 @@
 #include "FreeImage.h"
 #include "Engine/Scene.h"
 #include "Objects/Cube.h"
+#include "Objects/Sphere.h"
 
 /*
 math
@@ -54,9 +55,16 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	Cube cube(vertices, triangles);
-	Scene scene(Vector3d(0,0,0));
-	scene.addObject(&cube);
+	Cube cube(Vector3d(0,0,1),vertices, triangles);
+	Sphere sphere(Vector3d(2, 0, 1), 1);
+	//Sphere sphere2(Vector3d(2, 2, 2), 1.5);
+	Scene scene(Vector3d(0,0,0), Camera());
+	scene.addObject(&sphere);
+	//scene.addObject(&sphere2);
+	scene.render();
+
+
+
 	//Calcul intersect
 
 

@@ -11,7 +11,7 @@ private:
 	Cube();
 
 public:
-	Cube(std::vector<Vector3d> vertices, std::vector<Triangle> triangles);
+	Cube(Vector3d position, std::vector<Vector3d> vertices, std::vector<Triangle> triangles);
 	double getVolume();
 };
 

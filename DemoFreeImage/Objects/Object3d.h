@@ -8,7 +8,7 @@ private :
 	
 
 public :
-	Object3d();
+	Object3d(Vector3d position);
 	Vector3d getPosition();
 	virtual double getVolume() = 0;
 

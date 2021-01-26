@@ -1,5 +1,6 @@
 #include "Vector3d.h"
 #include <math.h>
+#include <iostream>
 
 Vector3d::Vector3d() : x(0), y(0), z(0) {}
 
@@ -27,6 +28,36 @@ Vector3d Vector3d::crossProduct(const Vector3d& other)
 	return Vector3d(newX, newY, newZ);
 }
 
+Vector3d Vector3d::getDirection(const Vector3d& end)
+{
+	return Vector3d(end.x - x, end.y - y, end.z - z);
+}
+
+double Vector3d::getLength()
+{
+	return sqrt(dotProduct(*this));
+}
+
+double Vector3d::getX()
+{
+	return x;
+}
+
+double Vector3d::getY()
+{
+	return y;
+}
+
+double Vector3d::getZ()
+{
+	return z;
+}
+
+void Vector3d::print()
+{
+	std::cout << x << " " << y << " " << z << "\n";
+}
+
 Vector3d Vector3d::operator+(const Vector3d& other) {
 	return Vector3d(x + other.x, y + other.y, z + other.z);
 }
@@ -41,4 +72,9 @@ Vector3d& Vector3d::operator+=(const Vector3d& other) {
 Vector3d Vector3d::operator-(const Vector3d& other)
 {
 	return Vector3d(x - other.x, y - other.y, z - other.z);
+}
+
+Vector3d Vector3d::operator*(double coefficient)
+{
+	return Vector3d(x * coefficient, y*coefficient, z*coefficient);
 }

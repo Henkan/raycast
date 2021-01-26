@@ -5,11 +5,11 @@
 class Sphere: public Object3d
 {
 private :
-	Vector3d center;
-	float radius;
+	double radius;
 	Sphere();
 public :
-	Sphere(Vector3d center, Vector3d radius);
+	Sphere(Vector3d center, double radius);
+	double getRadius();
 	double getVolume();
 
 };
