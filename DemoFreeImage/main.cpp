@@ -55,9 +55,11 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	Cube cube(Vector3d(0,0,1),vertices, triangles);
-	Sphere sphere(Vector3d(0, 0, 5), 1);
-	Sphere sphere2(Vector3d(2, 2, 5), 1);
+	std::map<char, int> colorRed = { {'r', 255}, {'g', 0}, {'b',0} };
+	Cube cube(Vector3d(0,0,1),vertices, triangles, colorRed );
+
+	Sphere sphere(Vector3d(0, 0, 5), 1,colorRed );
+	Sphere sphere2(Vector3d(2, 2, 5), 1, colorRed);
 	Scene scene(Vector3d(0,0,0), Camera());
 	scene.addObject(&sphere);
 	scene.addObject(&sphere2);

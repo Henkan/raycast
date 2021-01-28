@@ -7,6 +7,10 @@ Ray::Ray(Vector3d position, Vector3d direction) : position(position), direction(
 
 bool Ray::collides(Object3d* object)
 {
+
+	//TODO: add min and max distance (near and far plane)
+	//TODO: check which object is nearer if multiple collisions
+
 	//Intersection avec une sphere
 	Vector3d V0(position.getX() - object->getPosition().getX(), position.getY() - object->getPosition().getY(), position.getZ() - object->getPosition().getZ());
 

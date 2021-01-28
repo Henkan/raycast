@@ -24,22 +24,17 @@ void Scene::render()
 
 	double imageSizeHeight = (resolution.second * imageSize/ resolution.first);
 	std::cout << imageSizeHeight << "\n";
-	Vector3d dir;
 	Vector3d topLeftCorner((position.getX() - imageSize / 2), position.getY() + imageSizeHeight / 2, position.getZ() + direction.getZ() * focal);
 	for (int x = 0; x < resolution.first; ++x) {
 		for (int y = 0; y < resolution.second; ++y) {
 
 			Vector3d pixelPosition(topLeftCorner.getX() + x * imageSize / resolution.first, topLeftCorner.getY() - y * imageSizeHeight / resolution.second, topLeftCorner.getZ());
-			
-			dir = position.getDirection(pixelPosition);
-			if (x == 0 && y == 0) {
-				dir.print();
-			}
-
-			if (camera.sendRay(Ray(Vector3d(position), position.getDirection(pixelPosition)), objects)) {
-				color.rgbRed = 255;
-				color.rgbGreen = 255;
-				color.rgbBlue = 255;
+			Object3d* objectCollided = camera.sendRay(Ray(Vector3d(position), position.getDirection(pixelPosition)), objects);
+			if ( objectCollided != nullptr) {
+				std::map<char, int> colorObject = objectCollided->getColor();
+				color.rgbRed = colorObject.at('r') ;
+				color.rgbGreen = colorObject.at('g');
+				color.rgbBlue = colorObject.at('b');
 			}
 			else {
 				color.rgbRed = 0;
@@ -49,6 +44,5 @@ void Scene::render()
 			FreeImage_SetPixelColor(image, x, resolution.second - y, &color);
 		}
 	}
-	dir.print();
 	FreeImage_Save(FIF_BMP, image, "out.bmp");
 }

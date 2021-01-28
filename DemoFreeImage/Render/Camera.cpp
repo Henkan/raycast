@@ -12,16 +12,17 @@ Camera::Camera()
 	resolution = std::pair<int, int>(640, 480);
 }
 
-bool Camera::sendRay(Ray ray, std::vector<Object3d*> objects)
+Object3d* Camera::sendRay(Ray ray, std::vector<Object3d*> objects)
 {
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		if (ray.collides(*it)) {
-			//TODO: add min and max distance (near and far plane)
-			return true;
+			
+
+			return *it;
 		}
 		
 	}
-	return false;
+	return nullptr;
 }
 
 Vector3d Camera::getPosition()

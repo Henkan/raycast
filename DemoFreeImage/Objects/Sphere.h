@@ -8,7 +8,7 @@ private :
 	double radius;
 	Sphere();
 public :
-	Sphere(Vector3d center, double radius);
+	Sphere(Vector3d center, double radius, std::map<char,int> color);
 	double getRadius();
 	double getVolume();
 
