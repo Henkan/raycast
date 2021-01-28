@@ -4,19 +4,19 @@
 Camera::Camera()
 {
 	focal = 1;
-	position = Vector3d(0, 0, -1);
+	position = Vector3d(0, 0, 0);
 	direction = Vector3d(0, 0, 1);
 	nearDistance = 0.5;
 	farDistance = 5;
-	imageSize = 10;
-	resolution = std::pair<int, int>(600, 400);
+	imageSize = 2;
+	resolution = std::pair<int, int>(640, 480);
 }
 
 bool Camera::sendRay(Ray ray, std::vector<Object3d*> objects)
 {
-
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		if (ray.collides(*it)) {
+			//TODO: add min and max distance (near and far plane)
 			return true;
 		}
 		

@@ -56,20 +56,12 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,8,4 }));
 
 	Cube cube(Vector3d(0,0,1),vertices, triangles);
-	Sphere sphere(Vector3d(2, 0, 1), 1);
-	//Sphere sphere2(Vector3d(2, 2, 2), 1.5);
+	Sphere sphere(Vector3d(0, 0, 5), 1);
+	Sphere sphere2(Vector3d(2, 2, 5), 1);
 	Scene scene(Vector3d(0,0,0), Camera());
 	scene.addObject(&sphere);
-	//scene.addObject(&sphere2);
+	scene.addObject(&sphere2);
 	scene.render();
-
-
-
-	//Calcul intersect
-
-
-
-
 	
 	/*RGBQUAD color;
 	FIBITMAP* image;
