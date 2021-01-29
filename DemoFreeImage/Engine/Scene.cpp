@@ -62,24 +62,24 @@ void Scene::render()
 				double diffuseIntensity = (1 / light.getPosition().getDirection(collisionPoint).getLength()) * light.getIntensity() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm);
 				double specularIntensity = (1 / light.getPosition().getDirection(collisionPoint).getLength()) * light.getIntensity() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), lightSources.size());
 
-				//double totalIntensity = ambientIntensity * matObject.getAmbient() + diffuseIntensity * matObject.getDiffuse() + specularIntensity * matObject.getSpecular();
+				double totalIntensity = ambientIntensity * matObject.getAmbient() + diffuseIntensity * matObject.getDiffuse() + specularIntensity * matObject.getSpecular();
 				//std::cout << totalIntensity << "\n";
 				//   finalColor = ambient+lambertianTerm * surfaceColor * lightColor + specularIntensity * specularColor * lightColor;
-				int red = matObject.getColor().getRed() + ambientIntensity * matObject.getColor().getRed() * light.getColor().getRed() + specularIntensity * matObject.getColor().getRed() * light.getColor().getRed();
+				int red = matObject.getColor().getRed() * totalIntensity;
 				if (red > 255) {
 					color.rgbRed = 255;
 				}
 				else {
 					color.rgbRed = red;
 				}
-				int green = matObject.getColor().getGreen() + ambientIntensity * matObject.getColor().getGreen() * light.getColor().getGreen() + specularIntensity * matObject.getColor().getGreen() * light.getColor().getGreen();
+				int green = matObject.getColor().getGreen() *totalIntensity;
 				if (green > 255) {
 					color.rgbGreen = 255;
 				}
 				else {
 					color.rgbGreen = green;
 				}
-				int blue = matObject.getColor().getBlue() + ambientIntensity * matObject.getColor().getBlue() * light.getColor().getBlue() + specularIntensity * matObject.getColor().getBlue() * light.getColor().getBlue();
+				int blue = matObject.getColor().getBlue() * totalIntensity;
 				if (blue > 255) {
 					color.rgbBlue = 255;
 				}
