@@ -5,7 +5,7 @@
 
 Ray::Ray(Vector3d position, Vector3d direction) : position(position), direction(direction){}
 
-bool Ray::collides(Object3d* object)
+std::pair<bool, Vector3d> Ray::collides(Object3d* object)
 {
 
 	//TODO: add min and max distance (near and far plane)
@@ -19,7 +19,7 @@ bool Ray::collides(Object3d* object)
 	double coefC = pow(V0.getX(),2) + pow(V0.getY(), 2) + pow(V0.getZ(), 2) - pow(dynamic_cast<Sphere*>(object)->getRadius(),2);
 
 	double determinant = pow (coefB, 2) - 4 * coefA * coefC;
-	if (determinant > 0) {
+	if (determinant > 0) { //There is an intersection
 		double t1 = (-coefB - sqrt(determinant)) / (2 * coefA);
 		double t2 = (-coefB + sqrt(determinant)) / (2 * coefA);
 		//std::cout << "\nt1 " << t1 << " t2 " << t2 << "\n";
@@ -32,7 +32,20 @@ bool Ray::collides(Object3d* object)
 		std::cout << "\nintersection 2 : ";
 		intersection2.print();
 		std::cout << "distance 2 : ";
-		std::cout <<position.getDirection(intersection2).getLength();*/
+		std::cout <<position.getDirection(intersection2).getLength();
+		*/
+		if(t1 < t2){
+			return std::pair<bool, Vector3d>(true, intersection1);
+		}
+		else {
+			return std::pair<bool, Vector3d>(true, intersection2);
+		}
 	}
-	return (determinant > 0); 
+	else if (determinant == 0) { //Tangent
+		double t = (-coefB) / (2 * coefA); 
+		Vector3d intersection(position.getX() + t * direction.getX(), position.getY() + t * direction.getY(), position.getZ() + t * direction.getZ());
+		return std::pair<bool, Vector3d>(true, intersection);
+	}
+	//No intersection
+	return std::pair<bool, Vector3d>(false, Vector3d()); 
 }

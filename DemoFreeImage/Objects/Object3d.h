@@ -1,18 +1,19 @@
 #pragma once
 #include "../Maths/Vector3d.h"
 #include <map>
+#include "../Render/Material.h"
 class Object3d
 {
-private :
+protected :
+	Material material;
 	Vector3d position;
-	std::map<char, int> color;
 	
 
 public :
-	Object3d(Vector3d position, std::map<char, int> color);
+	Object3d(Material material, Vector3d position);
 	Vector3d getPosition();
-	std::map<char, int> getColor();
-	virtual double getVolume() = 0;
+	Material getMaterial();
+	virtual Vector3d getNormalVectorOfSurface(Vector3d positionOnSurface) = 0;
 
 };
 

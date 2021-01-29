@@ -1,0 +1,1 @@
+Si le plan near coupe un objet, l'objet sera tout de même affiché (on se trouve à l'intérieur de l'objet)

@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Render\Color.cpp" />
     <ClCompile Include="Render\Ray.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\LightSource.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Objects\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Render\Color.h" />
     <ClInclude Include="Render\Ray.h" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\LightSource.h" />

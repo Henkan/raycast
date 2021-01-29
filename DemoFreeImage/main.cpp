@@ -55,14 +55,18 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	std::map<char, int> colorRed = { {'r', 255}, {'g', 0}, {'b',0} };
-	Cube cube(Vector3d(0,0,1),vertices, triangles, colorRed );
+	Material materialRed(Color(255, 0, 0), 1, 1, 1);
+	LightSource ls(Vector3d(0, 2, 0));
 
-	Sphere sphere(Vector3d(0, 0, 5), 1,colorRed );
-	Sphere sphere2(Vector3d(2, 2, 5), 1, colorRed);
+	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
+
+	Sphere sphere(materialRed,Vector3d(0, 0, 5), 1);
+	//Sphere sphere2(Vector3d(0, 0, 5), 1, colorBlue);
 	Scene scene(Vector3d(0,0,0), Camera());
+	scene.addLightSource(&ls);
 	scene.addObject(&sphere);
-	scene.addObject(&sphere2);
+
+	//scene.addObject(&sphere2);
 	scene.render();
 	
 	/*RGBQUAD color;

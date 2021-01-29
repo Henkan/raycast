@@ -1,12 +1,14 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Vector3d center, double radius, std::map<char,int> color) : Object3d(center, color), radius(radius){}
+Sphere::Sphere(Material material, Vector3d center, double radius) : Object3d(material, center), radius(radius){}
 
 double Sphere::getRadius()
 {
 	return radius;
 }
 
-double Sphere::getVolume() {
-	return 0;
+Vector3d Sphere::getNormalVectorOfSurface(Vector3d positionOnSurface) {
+	Vector3d norm = position.getDirection(positionOnSurface);
+	norm.normalize();
+	return norm;
 }

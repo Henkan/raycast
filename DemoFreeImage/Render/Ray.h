@@ -9,6 +9,6 @@ private :
 	Ray();
 public :
 	Ray(Vector3d position, Vector3d direction);
-	bool collides(Object3d* object);
+	std::pair<bool, Vector3d> collides(Object3d* object);
 };
 

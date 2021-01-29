@@ -15,7 +15,7 @@ void Vector3d::normalize() {
 	z /= length;
 }
 
-double Vector3d::dotProduct(const Vector3d& other)
+double Vector3d::dotProduct(const Vector3d& other) const
 {
 	return x * other.x + y * other.y + z * other.z;
 }
@@ -33,7 +33,20 @@ Vector3d Vector3d::getDirection(const Vector3d& end)
 	return Vector3d(end.x - x, end.y - y, end.z - z);
 }
 
+Vector3d Vector3d::getReflected(Vector3d& normal)
+{
+	//lumiere R = 2N(N.L)-L
+	double scal = normal.dotProduct(*this);
+	Vector3d temp = normal * (scal * 2);
+	return (temp - *this);
+}
+
 double Vector3d::getLength()
+{
+	return sqrt(dotProduct(*this));
+}
+
+double Vector3d::getNorm()
 {
 	return sqrt(dotProduct(*this));
 }
@@ -77,4 +90,9 @@ Vector3d Vector3d::operator-(const Vector3d& other)
 Vector3d Vector3d::operator*(double coefficient)
 {
 	return Vector3d(x * coefficient, y*coefficient, z*coefficient);
+}
+
+Vector3d Vector3d::operator/(double coefficient)
+{
+	return Vector3d(x / coefficient, y / coefficient, z / coefficient);
 }

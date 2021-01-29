@@ -1,13 +1,13 @@
 #include "Object3d.h"
 
-Object3d::Object3d(Vector3d position, std::map<char,int> color) : position(position), color(color) {}
+Object3d::Object3d(Material material, Vector3d position) : material(material),position(position) {}
 
 Vector3d Object3d::getPosition()
 {
 	return position;
 }
 
-std::map<char, int> Object3d::getColor()
+Material Object3d::getMaterial()
 {
-	return color;
+	return material;
 }

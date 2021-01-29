@@ -16,7 +16,7 @@ private:
 
 public:
 	Camera();
-	Object3d* sendRay(Ray ray, std::vector<Object3d*> objects);
+	std::pair<Object3d*, Vector3d> sendRay(Ray ray, std::vector<Object3d*> objects);
 	Vector3d getPosition();
 	Vector3d getDirection();
 	std::pair<int, int> getResolution();
