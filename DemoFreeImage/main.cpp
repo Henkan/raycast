@@ -55,8 +55,8 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	Material materialRed(Color(255, 50, 0), 0.3, 0.6, 0.7);
-	LightSource ls(Vector3d(0, 2, 0));
+	Material materialRed(Color(64, 141, 147), 0.3, 0.3, 0.3);
+	LightSource ls(Vector3d(0, 10, 0));
 
 	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
 

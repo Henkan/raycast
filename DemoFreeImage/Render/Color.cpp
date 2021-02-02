@@ -1,4 +1,5 @@
 #include "Color.h"
+#include <iostream>
 
 Color::Color(){}
 
@@ -14,4 +15,12 @@ int Color::getGreen() {
 
 int Color::getBlue() {
 	return blue;
+}
+
+Color Color::operator+(const Color& other) {
+	return Color(red + other.red, green + other.green, blue + other.blue);
+}
+
+void Color::print() {
+	std::cout << red << " " << green << " " << blue << "\n";
 }

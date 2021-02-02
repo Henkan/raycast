@@ -12,5 +12,7 @@ public :
 	int getRed();
 	int getBlue();
 	int getGreen();
+	Color operator+(const Color& other);
+	void print();
 };
 
