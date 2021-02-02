@@ -48,53 +48,38 @@ void Scene::render()
 				Vector3d surfaceNormaleNorm = objectCollided->getNormalVectorOfSurface(collisionPoint);
 				surfaceNormaleNorm.normalize();
 
-				//TODO : For each light
-				LightSource light = *lightSources[0];
-
-				Vector3d dirTowardsLightNorm = collisionPoint.getDirection(light.getPosition());
-				dirTowardsLightNorm.normalize();
-
-				Vector3d lightReflectionNorm = dirTowardsLightNorm.getReflected(surfaceNormaleNorm);
-				lightReflectionNorm.normalize();
-
-				Vector3d medianDirCamLight = (dirTowardsLightNorm + dirCameraNorm) / (dirTowardsLightNorm + dirCameraNorm).getNorm();
-				// JUSQUE LA CEST GOOD
-
-				double attenuationFunction = (1 / light.getPosition().getDirection(collisionPoint).getLength());
 				Color ambient(matObject.getColor().getRed() * matObject.getAmbient(),
 					matObject.getColor().getGreen() * matObject.getAmbient(),
 					matObject.getColor().getBlue() * matObject.getAmbient());
 
-				Color diffuse(matObject.getColor().getRed() * matObject.getDiffuse() * attenuationFunction * light.getColor().getRed() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
-					matObject.getColor().getGreen() * matObject.getDiffuse() * attenuationFunction * light.getColor().getGreen() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
-					matObject.getColor().getBlue() * matObject.getDiffuse() * attenuationFunction * light.getColor().getBlue() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm));
+				Color pixelColor = ambient;
 
-				Color specular(matObject.getSpecular() * attenuationFunction * light.getColor().getRed() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), lightSources.size()),
-					matObject.getSpecular() * attenuationFunction * light.getColor().getGreen() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), lightSources.size()),
-					matObject.getSpecular() * attenuationFunction * light.getColor().getBlue() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), lightSources.size()));
-				
-				Color pixelColor = ambient + specular + diffuse;
-				//pixelColor = diffuse;
-				//specular.print();
-				//pixelColor = specular;
-				//AMBIENT OK ? POTETRE
-				//std::cout << surfaceNormaleNorm.dotProduct(medianDirCamLight) << "\n";
+				//TODO : For each light
+				for (auto light : lightSources) {
+
+					Vector3d dirTowardsLightNorm = collisionPoint.getDirection(light->getPosition());
+					dirTowardsLightNorm.normalize();
+
+					Vector3d lightReflectionNorm = dirTowardsLightNorm.getReflected(surfaceNormaleNorm);
+					lightReflectionNorm.normalize();
+
+					Vector3d medianDirCamLight = (dirTowardsLightNorm + dirCameraNorm) / (dirTowardsLightNorm + dirCameraNorm).getNorm();
+					
+					double attenuationFunction = (1/  light->getPosition().getDirection(collisionPoint).getLength());
+					// JUSQUE LA CEST GOOD
+
+					Color diffuse(matObject.getColor().getRed() * matObject.getDiffuse() * attenuationFunction * light->getColor().getRed() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
+						matObject.getColor().getGreen() * matObject.getDiffuse() * attenuationFunction * light->getColor().getGreen() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
+						matObject.getColor().getBlue() * matObject.getDiffuse() * attenuationFunction * light->getColor().getBlue() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm));
+
+					Color specular(matObject.getSpecular() * attenuationFunction * light->getColor().getRed() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight),1),
+						matObject.getSpecular() * attenuationFunction * light->getColor().getGreen() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), 1),
+						matObject.getSpecular() * attenuationFunction * light->getColor().getBlue() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), 1));
+
+					pixelColor = pixelColor + specular + diffuse;
+				}
 
 
-				//pixelColor = specular;
-				/*pixelColor = diffuse;
-				std::cout << "Object: ";
-				matObject.getColor().print();
-				std::cout << "Light: ";
-				light.getColor().print();*/
-
-				//double ambientIntensity = light.getIntensity() * matObject.getAmbient();
-				//double diffuseIntensity = (1 / light.getPosition().getDirection(collisionPoint).getLength()) * light.getIntensity() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm);
-				//double specularIntensity = (1 / light.getPosition().getDirection(collisionPoint).getLength()) * light.getIntensity() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), lightSources.size());
-
-				//double totalIntensity = ambientIntensity * matObject.getAmbient() + diffuseIntensity * matObject.getDiffuse() + specularIntensity * matObject.getSpecular();
-				//std::cout << totalIntensity << "\n";
-				//   finalColor = ambient+lambertianTerm * surfaceColor * lightColor + specularIntensity * specularColor * lightColor;
 				if (pixelColor.getRed() > 255) color.rgbRed = 255;
 				else if (pixelColor.getRed() < 0) color.rgbRed = 0;
 				else color.rgbRed = pixelColor.getRed();
