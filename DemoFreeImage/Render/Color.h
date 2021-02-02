@@ -5,9 +5,10 @@ private :
 	int red;
 	int green;
 	int blue;
-	Color();
+
 
 public :
+	Color();
 	Color(int red, int green, int blue);
 	int getRed();
 	int getBlue();

@@ -7,9 +7,10 @@ private :
 	double diffuse;
 	double ambient;
 	double specular;
-	Material();
+
 
 public :
+	Material();
 	Material(Color color, double diffuse, double ambient, double specular);
 	Color getColor();
 	double getDiffuse();

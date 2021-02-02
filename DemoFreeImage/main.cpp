@@ -3,6 +3,7 @@
 #include "Engine/Scene.h"
 #include "Objects/Cube.h"
 #include "Objects/Sphere.h"
+#include "Objects/Plane.h"
 
 /*
 math
@@ -55,16 +56,18 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	Material materialRed(Color(64, 141, 147), 0.3, 0.3, 0.3);
+	Material materialBlue(Color(64, 141, 147), 0.3, 0.3, 0.3);
+	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3);
 	LightSource ls(Vector3d(0, 20, -20));
 
 	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
-
+	Plane plane(materialBlue, Vector3d(0,0,8), Vector3d(0,0,-1));
 	Sphere sphere(materialRed,Vector3d(0, 0, 5), 1);
 	//Sphere sphere2(Vector3d(0, 0, 5), 1, colorBlue);
 	Scene scene(Vector3d(0,0,0), Camera());
 	scene.addLightSource(&ls);
-	scene.addObject(&sphere);
+	//scene.addObject(&sphere);
+	scene.addObject(&plane);
 
 	//scene.addObject(&sphere2);
 	scene.render();

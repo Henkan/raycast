@@ -3,12 +3,15 @@
 #include "../Maths/Vector3d.h"
 #include "../Render/Ray.h"
 #include <vector>
+#include "../Objects/Plane.h"
 class Camera
 {
 private:
 	double focal;
 	Vector3d position;
 	Vector3d direction;
+	Plane nearPlane;
+	Plane farPlane;
 	double nearDistance;
 	double farDistance;
 	double imageSize;

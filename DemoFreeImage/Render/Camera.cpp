@@ -7,9 +7,20 @@ Camera::Camera()
 	position = Vector3d(0, 0, 0);
 	direction = Vector3d(0, 0, 1);
 	nearDistance = 0.5;
-	farDistance = 5;
+	farDistance = 10;
 	imageSize = 2;
 	resolution = std::pair<int, int>(640, 480);
+
+	Vector3d farPoint = position + direction * farDistance;
+	Vector3d farNormal = farPoint.getDirection(position);
+	farNormal.normalize();
+	farPlane = Plane(Material(Color(0,0,0),0,0,0),farPoint, farNormal);
+
+	Vector3d nearPoint = position + direction * nearDistance;
+	Vector3d nearNormal = position.getDirection(nearPoint);
+	nearNormal.normalize();
+	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0), nearPoint, nearNormal);
+
 }
 
 std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> objects)
@@ -17,9 +28,19 @@ std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> o
 	std::vector<std::pair<Object3d*,Vector3d>> objectsWithCollision;
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		std::pair<bool, Vector3d> result = ray.collides(*it);
+
+
 		if (result.first) { //If collision
 			double distanceCamCollision = position.getDirection(result.second).getLength();
-			if (distanceCamCollision >= nearDistance && distanceCamCollision <= farDistance) { //Object in sight
+			
+			Vector3d farToCol = result.second - farPlane.getPosition();
+			double distanceFarCol = farToCol.dotProduct(farPlane.getNormal());
+
+			Vector3d nearToCol = result.second - nearPlane.getPosition();
+			double distanceNearCol = nearToCol.dotProduct(nearPlane.getNormal());
+
+			if (distanceNearCol >= 0 && distanceFarCol >= 0) { //Object in sight
+
 				if (objectsWithCollision.empty()) { //Meaning there are no collision yet
 					objectsWithCollision.push_back(std::pair<Object3d*, Vector3d>(*it, result.second));
 				}
@@ -33,8 +54,8 @@ std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> o
 				
 			}
 		}
-		
 	}
+
 	if (objectsWithCollision.empty()) {
 		return std::pair<Object3d*, Vector3d>(nullptr,Vector3d());
 	}

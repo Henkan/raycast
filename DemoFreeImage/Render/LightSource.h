@@ -7,9 +7,10 @@ private:
 	Vector3d position;
 	Color color;
 	double intensity;
-	LightSource();
+
 
 public:
+	LightSource();
 	LightSource(Vector3d position);
 	Color getColor();
 	Vector3d getPosition();

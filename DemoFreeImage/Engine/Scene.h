@@ -12,8 +12,9 @@ private:
 	Camera camera;
 	std::vector<Object3d*> objects;
 	std::vector<LightSource*> lightSources;
-	Scene();
+
 public:
+	Scene();
 	Scene(Vector3d origin, Camera camera);
 	void addObject(Object3d* object);
 	void addLightSource(LightSource* lightSource);

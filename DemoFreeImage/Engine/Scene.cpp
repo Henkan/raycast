@@ -2,6 +2,10 @@
 #include <iostream>
 #include <FreeImage.h>
 
+Scene::Scene()
+{
+}
+
 Scene::Scene(Vector3d origin, Camera camera) : origin(origin), camera(camera), objects(std::vector<Object3d*>()), lightSources(std::vector<LightSource*>()) {}
 
 void Scene::addObject(Object3d* object)
@@ -39,7 +43,7 @@ void Scene::render()
 			Vector3d collisionPoint = objectAndPosCollided.second;
 
 			if ( objectCollided != nullptr) {
-				//collisionPoint = Vector3d(0, 1, 5); //aaa
+
 				Material matObject = objectCollided->getMaterial();
 				
 				Vector3d dirCameraNorm = collisionPoint.getDirection(camera.getPosition());
@@ -89,6 +93,7 @@ void Scene::render()
 				if (pixelColor.getBlue() > 255) color.rgbBlue = 255;
 				else if (pixelColor.getBlue() < 0) color.rgbBlue = 0;
 				else color.rgbBlue = pixelColor.getBlue();
+
 			}
 			else {
 				color.rgbRed = 0;

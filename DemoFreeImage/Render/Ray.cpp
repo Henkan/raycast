@@ -7,11 +7,9 @@ Ray::Ray(Vector3d position, Vector3d direction) : position(position), direction(
 
 std::pair<bool, Vector3d> Ray::collides(Object3d* object)
 {
-
-	//TODO: add min and max distance (near and far plane)
 	//TODO: check which object is nearer if multiple collisions
-
-	//Intersection avec une sphere
+	return object->doesRayIntersect(*this);
+	/*//Intersection avec une sphere
 	Vector3d V0(position.getX() - object->getPosition().getX(), position.getY() - object->getPosition().getY(), position.getZ() - object->getPosition().getZ());
 
 	double coefA = direction.dotProduct(direction);
@@ -22,18 +20,10 @@ std::pair<bool, Vector3d> Ray::collides(Object3d* object)
 	if (determinant > 0) { //There is an intersection
 		double t1 = (-coefB - sqrt(determinant)) / (2 * coefA);
 		double t2 = (-coefB + sqrt(determinant)) / (2 * coefA);
-		//std::cout << "\nt1 " << t1 << " t2 " << t2 << "\n";
+
 		Vector3d intersection1(position.getX() + t1 * direction.getX(), position.getY() + t1 * direction.getY(), position.getZ() + t1 * direction.getZ());
 		Vector3d intersection2(position.getX() + t2 * direction.getX(), position.getY() + t2 * direction.getY(), position.getZ() + t2 * direction.getZ());
-		/*std::cout << "intersection 1 : ";
-		intersection1.print();
-		std::cout << "distance 1 : ";
-		std::cout << position.getDirection(intersection1).getLength();
-		std::cout << "\nintersection 2 : ";
-		intersection2.print();
-		std::cout << "distance 2 : ";
-		std::cout <<position.getDirection(intersection2).getLength();
-		*/
+
 		if(t1 < t2){
 			return std::pair<bool, Vector3d>(true, intersection1);
 		}
@@ -48,4 +38,15 @@ std::pair<bool, Vector3d> Ray::collides(Object3d* object)
 	}
 	//No intersection
 	return std::pair<bool, Vector3d>(false, Vector3d()); 
+	*/
+}
+
+Vector3d Ray::getPosition()
+{
+	return position;
+}
+
+Vector3d Ray::getDirection()
+{
+	return direction;
 }
