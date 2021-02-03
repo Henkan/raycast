@@ -7,19 +7,19 @@ Camera::Camera()
 	position = Vector3d(0, 0, 0);
 	direction = Vector3d(0, 0, 1);
 	nearDistance = 0.5;
-	farDistance = 10;
+	farDistance = 100;
 	imageSize = 2;
 	resolution = std::pair<int, int>(640, 480);
 
 	Vector3d farPoint = position + direction * farDistance;
 	Vector3d farNormal = farPoint.getDirection(position);
 	farNormal.normalize();
-	farPlane = Plane(Material(Color(0,0,0),0,0,0),farPoint, farNormal);
+	farPlane = Plane(Material(Color(0,0,0), 0, 0, 0, 0),farPoint, farNormal);
 
 	Vector3d nearPoint = position + direction * nearDistance;
 	Vector3d nearNormal = position.getDirection(nearPoint);
 	nearNormal.normalize();
-	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0), nearPoint, nearNormal);
+	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
 
 }
 

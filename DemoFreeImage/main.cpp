@@ -56,18 +56,22 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
 
-	Material materialBlue(Color(64, 141, 147), 0.3, 0.3, 0.3);
-	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3);
-	LightSource ls(Vector3d(0, 20, -20));
+	Material materialBlue(Color(64, 141, 147), 0.3, 0.3, 0.3, 100);
+	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
+	Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
+	LightSource ls(Vector3d(0, 10, -10));
 
 	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
-	Plane plane(materialBlue, Vector3d(0,0,8), Vector3d(0,0,-1));
-	Sphere sphere(materialRed,Vector3d(0, 0, 5), 1);
+	//Plane plane(materialBlue, Vector3d(0,0,80), Vector3d(0,0,-1));
+	//Plane plane2(materialGreen, Vector3d(0, -5, 0), Vector3d(0, 1, 0));
+	Sphere sphere(materialGreen,Vector3d(0, 0, 5), 1);
+
 	//Sphere sphere2(Vector3d(0, 0, 5), 1, colorBlue);
 	Scene scene(Vector3d(0,0,0), Camera());
 	scene.addLightSource(&ls);
-	//scene.addObject(&sphere);
-	scene.addObject(&plane);
+	scene.addObject(&sphere);
+	//scene.addObject(&plane);
+	//scene.addObject(&plane2);
 
 	//scene.addObject(&sphere2);
 	scene.render();
