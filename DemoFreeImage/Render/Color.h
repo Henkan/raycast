@@ -13,7 +13,9 @@ public :
 	int getRed();
 	int getBlue();
 	int getGreen();
+	void correctRange();
 	Color operator+(const Color& other);
+	Color operator+(int other);
 	void print();
 };
 

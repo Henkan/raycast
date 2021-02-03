@@ -21,6 +21,20 @@ Color Color::operator+(const Color& other) {
 	return Color(red + other.red, green + other.green, blue + other.blue);
 }
 
+Color Color::operator+(int other)
+{
+	return Color(red + other, green + other, blue + other);
+}
+
 void Color::print() {
 	std::cout << red << " " << green << " " << blue << "\n";
+}
+
+void Color::correctRange() {
+	if (red < 0) red = 0;
+	else if (red > 255) red = 255;
+	if (green < 0) green = 0;
+	else if (green > 255) green = 255;
+	if (blue < 0) blue = 0;
+	else if (blue > 255) blue = 255;
 }

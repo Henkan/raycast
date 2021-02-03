@@ -1,4 +1,5 @@
 #include "Sphere.h"
+#include <iostream>
 
 Sphere::Sphere(Material material, Vector3d center, double radius) : Object3d(material, center), radius(radius){}
 
@@ -15,7 +16,6 @@ Vector3d Sphere::getNormalVectorOfSurface(Vector3d positionOnSurface) {
 
 std::pair<bool, Vector3d> Sphere::doesRayIntersect(Ray ray)
 {
-
 	Vector3d rayPos = ray.getPosition();
 	Vector3d rayDir = ray.getDirection();
 
@@ -34,11 +34,14 @@ std::pair<bool, Vector3d> Sphere::doesRayIntersect(Ray ray)
 		Vector3d intersection1(rayPos.getX() + t1 * rayDir.getX(), rayPos.getY() + t1 * rayDir.getY(), rayPos.getZ() + t1 * rayDir.getZ());
 		Vector3d intersection2(rayPos.getX() + t2 * rayDir.getX(), rayPos.getY() + t2 * rayDir.getY(), rayPos.getZ() + t2 * rayDir.getZ());
 
+		//std::cout << "t1: " << t1 << " - t2: " << t2 << "\n";
 		if (t1 < t2) {
-			return std::pair<bool, Vector3d>(true, intersection1);
+			if (t1 > 0) return std::pair<bool, Vector3d>(true, intersection1);
+			else return std::pair<bool, Vector3d>(false, Vector3d());
 		}
 		else {
-			return std::pair<bool, Vector3d>(true, intersection2);
+			if (t2 > 0) return std::pair<bool, Vector3d>(true, intersection2);
+			else return std::pair<bool, Vector3d>(false, Vector3d());
 		}
 	}
 	else if (determinant == 0) { //Tangent

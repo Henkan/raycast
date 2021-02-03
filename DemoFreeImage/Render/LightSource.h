@@ -6,15 +6,11 @@ class LightSource
 private:
 	Vector3d position;
 	Color color;
-	double intensity;
-
-
 public:
 	LightSource();
 	LightSource(Vector3d position);
+	LightSource(Vector3d position, Color color);
 	Color getColor();
 	Vector3d getPosition();
-	double getIntensity();
-
 };
 

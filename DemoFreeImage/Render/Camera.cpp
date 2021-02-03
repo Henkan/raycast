@@ -39,7 +39,6 @@ std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> o
 	for (auto it = objects.begin(); it != objects.end(); ++it) {
 		std::pair<bool, Vector3d> result = ray.collides(*it);
 
-
 		if (result.first) { //If collision
 			double distanceCamCollision = position.getDirection(result.second).getLength();
 			

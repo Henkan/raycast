@@ -6,7 +6,7 @@ Scene::Scene()
 {
 }
 
-Scene::Scene(Vector3d origin, Camera camera) : origin(origin), camera(camera), objects(std::vector<Object3d*>()), lightSources(std::vector<LightSource*>()) {}
+Scene::Scene(Camera camera) : camera(camera), objects(std::vector<Object3d*>()), lightSources(std::vector<LightSource*>()) {}
 
 void Scene::addObject(Object3d* object)
 {
@@ -42,7 +42,7 @@ void Scene::render()
 			Object3d* objectCollided = objectAndPosCollided.first;
 			Vector3d collisionPoint = objectAndPosCollided.second;
 
-			if ( objectCollided != nullptr) {
+			if (objectCollided != nullptr) {
 
 				Material matObject = objectCollided->getMaterial();
 				
@@ -58,41 +58,52 @@ void Scene::render()
 
 				Color pixelColor = ambient;
 
-				//TODO : For each light
 				for (auto light : lightSources) {
 
 					Vector3d dirTowardsLightNorm = collisionPoint.getDirection(light->getPosition());
 					dirTowardsLightNorm.normalize();
+
+					Ray rayToLight(collisionPoint, dirTowardsLightNorm);
+					std::vector<Object3d*> otherObjets = objects;
+					auto it = std::find(otherObjets.begin(), otherObjets.end(), objectCollided);
+					if (it != otherObjets.end()) otherObjets.erase(it);
+					// If there is an object blocking light, skip light effect
+					if (camera.sendRay(rayToLight, otherObjets).first != nullptr) continue;
 
 					Vector3d lightReflectionNorm = dirTowardsLightNorm.getReflected(surfaceNormaleNorm);
 					lightReflectionNorm.normalize();
 
 					Vector3d medianDirCamLight = (dirTowardsLightNorm + dirCameraNorm) / (dirTowardsLightNorm + dirCameraNorm).getNorm();
 					
-					double attenuationFunction = (1 /  light->getPosition().getDirection(collisionPoint).getLength());
+					double attenuationFunction = (1 / light->getPosition().getDirection(collisionPoint).getLength());
 
 					Color diffuse(matObject.getColor().getRed() * matObject.getDiffuse() * attenuationFunction * light->getColor().getRed() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
 						matObject.getColor().getGreen() * matObject.getDiffuse() * attenuationFunction * light->getColor().getGreen() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
 						matObject.getColor().getBlue() * matObject.getDiffuse() * attenuationFunction * light->getColor().getBlue() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm));
+					diffuse.correctRange();
 
 					Color specular(matObject.getSpecular() * attenuationFunction * light->getColor().getRed() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()),
 						matObject.getSpecular() * attenuationFunction * light->getColor().getGreen() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()),
 						matObject.getSpecular() * attenuationFunction * light->getColor().getBlue() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()));
+					specular.correctRange();
 
+					/*std::cout << surfaceNormaleNorm.dotProduct(dirTowardsLightNorm) << "\n";
+					surfaceNormaleNorm.print();
+					dirTowardsLightNorm.print();
+					std::cout << "=================\n";*/
 					pixelColor = pixelColor + specular + diffuse;
 				}
 
+				/*if (!lightSources.empty()) {
+					double coeff = 0.7;
+					Color ambientLightColor(matObject.getColor().getRed() * coeff, matObject.getColor().getGreen() * coeff, matObject.getColor().getBlue() * coeff);
+					pixelColor = pixelColor + ambientLightColor;
+				}*/
 
-				if (pixelColor.getRed() > 255) color.rgbRed = 255;
-				else if (pixelColor.getRed() < 0) color.rgbRed = 0;
-				else color.rgbRed = pixelColor.getRed();
-				if (pixelColor.getGreen() > 255) color.rgbGreen = 255;
-				else if (pixelColor.getGreen() < 0) color.rgbGreen = 0;
-				else color.rgbGreen = pixelColor.getGreen();
-				if (pixelColor.getBlue() > 255) color.rgbBlue = 255;
-				else if (pixelColor.getBlue() < 0) color.rgbBlue = 0;
-				else color.rgbBlue = pixelColor.getBlue();
-
+				pixelColor.correctRange();
+				color.rgbRed = pixelColor.getRed();
+				color.rgbGreen = pixelColor.getGreen();
+				color.rgbBlue = pixelColor.getBlue();
 			}
 			else {
 				color.rgbRed = 0;

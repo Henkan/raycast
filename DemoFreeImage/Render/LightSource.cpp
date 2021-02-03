@@ -1,6 +1,8 @@
 #include "LightSource.h"
 
-LightSource::LightSource(Vector3d position) : position(position), color(Color(255,255,255)), intensity(1){}
+LightSource::LightSource(Vector3d position) : position(position), color(Color(255,255,255)) {}
+
+LightSource::LightSource(Vector3d position, Color color) : position(position), color(color) {}
 
 Color LightSource::getColor()
 {
@@ -10,9 +12,4 @@ Color LightSource::getColor()
 Vector3d LightSource::getPosition()
 {
 	return position;
-}
-
-double LightSource::getIntensity()
-{
-	return intensity;
 }

@@ -8,14 +8,13 @@
 class Scene
 {
 private:
-	Vector3d origin;
 	Camera camera;
 	std::vector<Object3d*> objects;
 	std::vector<LightSource*> lightSources;
 
 public:
 	Scene();
-	Scene(Vector3d origin, Camera camera);
+	Scene(Camera camera);
 	void addObject(Object3d* object);
 	void addLightSource(LightSource* lightSource);
 	void render();
