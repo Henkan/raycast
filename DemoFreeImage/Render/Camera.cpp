@@ -1,6 +1,19 @@
 #include "Camera.h"
 #include <iostream>
 
+void Camera::initializePlanes()
+{
+	Vector3d farPoint = position + direction * farDistance;
+	Vector3d farNormal = farPoint.getDirection(position);
+	farNormal.normalize();
+	farPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), farPoint, farNormal);
+
+	Vector3d nearPoint = position + direction * nearDistance;
+	Vector3d nearNormal = position.getDirection(nearPoint);
+	nearNormal.normalize();
+	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
+}
+
 Camera::Camera()
 {
 	focal = 1;
@@ -11,16 +24,13 @@ Camera::Camera()
 	imageSize = 2;
 	resolution = std::pair<int, int>(640, 480);
 
-	Vector3d farPoint = position + direction * farDistance;
-	Vector3d farNormal = farPoint.getDirection(position);
-	farNormal.normalize();
-	farPlane = Plane(Material(Color(0,0,0), 0, 0, 0, 0),farPoint, farNormal);
+	initializePlanes();
+}
 
-	Vector3d nearPoint = position + direction * nearDistance;
-	Vector3d nearNormal = position.getDirection(nearPoint);
-	nearNormal.normalize();
-	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
-
+Camera::Camera(Vector3d position, Vector3d direction, double focal, double nearDistance, double farDistance, double imageSize, std::pair<int, int> resolution)
+	: position(position), direction(direction), focal(focal), nearDistance(nearDistance), farDistance(farDistance), imageSize(imageSize), resolution(resolution)
+{
+	initializePlanes();
 }
 
 std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> objects)

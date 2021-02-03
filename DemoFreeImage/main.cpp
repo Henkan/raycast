@@ -55,25 +55,39 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 1,6,2 }));
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));
+	
 
+	/*=== CAMERA ===*/
+	double focal(1);
+	Vector3d cameraPosition(0, 0, 0);
+	Vector3d cameraDirection(0, 0, 1);
+	double nearPlaneDistance(0.5);
+	double farPlaneDistance(100);
+	double imageSize(2);
+	std::pair<int, int> imageResolution(640, 480);
+	Camera camera(cameraPosition, cameraDirection, focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
+
+	/*=== MATERIALS ===*/
 	Material materialBlue(Color(64, 141, 147), 0.3, 0.3, 0.3, 100);
 	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
 	Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
-	LightSource ls(Vector3d(0, 10, -10));
+	Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10);
 
+	/*=== LIGHT SOURCES ===*/
+	LightSource light(Vector3d(0, 50, -50));
+
+	/*=== OBJECTS ===*/
+	Sphere sphere(materialBlue, Vector3d(0, -0.1, 5), 1);
 	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
-	//Plane plane(materialBlue, Vector3d(0,0,80), Vector3d(0,0,-1));
-	//Plane plane2(materialGreen, Vector3d(0, -5, 0), Vector3d(0, 1, 0));
-	Sphere sphere(materialGreen,Vector3d(0, 0, 5), 1);
+	Plane planeHorizontal(materialLightgrey, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
+	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));
 
-	//Sphere sphere2(Vector3d(0, 0, 5), 1, colorBlue);
-	Scene scene(Vector3d(0,0,0), Camera());
-	scene.addLightSource(&ls);
+	/*=== SCENE ===*/
+	Scene scene(Vector3d(0,0,0), camera);
+	scene.addLightSource(&light);
 	scene.addObject(&sphere);
-	//scene.addObject(&plane);
-	//scene.addObject(&plane2);
-
-	//scene.addObject(&sphere2);
+	scene.addObject(&planeHorizontal);
+	scene.addObject(&planeVertical);
 	scene.render();
 	
 	/*RGBQUAD color;

@@ -17,8 +17,10 @@ private:
 	double imageSize;
 	std::pair<int, int> resolution;
 
+	void initializePlanes();
 public:
 	Camera();
+	Camera(Vector3d position, Vector3d direction, double focal, double nearDistance, double farDistance, double imageSize, std::pair<int, int> resolution);
 	std::pair<Object3d*, Vector3d> sendRay(Ray ray, std::vector<Object3d*> objects);
 	Vector3d getPosition();
 	Vector3d getDirection();
