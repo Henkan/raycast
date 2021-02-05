@@ -14,5 +14,7 @@ public:
 	Vector3d getNormalVectorOfSurface(Vector3d positionOnSurface);
 	Vector3d getNormal();
 	std::pair<bool, Vector3d> doesRayIntersect(Ray ray);
+
+	Color getColor();
 };
 

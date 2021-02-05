@@ -5,6 +5,8 @@ Color::Color() : red(0), green(0), blue(0) {}
 
 Color::Color(int red, int green, int blue): red(red), green(green), blue(blue) {}
 
+Color::Color(std::string red, std::string green, std::string blue) : red(std::stoi(red)), green(std::stoi(green)), blue(std::stoi(blue)){}
+
 int Color::getRed() {
 	return red;
 }

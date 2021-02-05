@@ -12,5 +12,7 @@ public:
 	LightSource(Vector3d position, Color color);
 	Color getColor();
 	Vector3d getPosition();
+
+	~LightSource();
 };
 

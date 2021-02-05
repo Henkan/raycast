@@ -8,14 +8,29 @@ Scene::Scene()
 
 Scene::Scene(Camera camera) : camera(camera), objects(std::vector<Object3d*>()), lightSources(std::vector<LightSource*>()) {}
 
+void Scene::addCamera(Camera camera)
+{
+	this->camera = camera;
+}
+
 void Scene::addObject(Object3d* object)
 {
 	objects.push_back(object);
 }
 
+void Scene::addObjects(std::vector<Object3d*> listObjects)
+{
+	objects.insert(objects.end(), listObjects.begin(), listObjects.end());
+}
+
 void Scene::addLightSource(LightSource* lightSource)
 {
 	lightSources.push_back(lightSource);
+}
+
+void Scene::addLightSources(std::vector<LightSource*> lightSourcesToAdd)
+{
+	lightSources.insert(lightSources.end(), lightSourcesToAdd.begin(), lightSourcesToAdd.end());
 }
 
 void Scene::render()
@@ -81,7 +96,7 @@ void Scene::render()
 						matObject.getColor().getGreen() * matObject.getDiffuse() * attenuationFunction * light->getColor().getGreen() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm),
 						matObject.getColor().getBlue() * matObject.getDiffuse() * attenuationFunction * light->getColor().getBlue() * surfaceNormaleNorm.dotProduct(dirTowardsLightNorm));
 					diffuse.correctRange();
-
+					
 					Color specular(matObject.getSpecular() * attenuationFunction * light->getColor().getRed() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()),
 						matObject.getSpecular() * attenuationFunction * light->getColor().getGreen() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()),
 						matObject.getSpecular() * attenuationFunction * light->getColor().getBlue() * pow(surfaceNormaleNorm.dotProduct(medianDirCamLight), matObject.getShininess()));
@@ -114,4 +129,19 @@ void Scene::render()
 		}
 	}
 	FreeImage_Save(FIF_BMP, image, "out.bmp");
+}
+
+void Scene::printObjects()
+{
+	std::cout << objects[0]->getMaterial().getColor().getBlue()<< std::endl;
+}
+
+void Scene::printLight()
+{
+	lightSources[0]->getColor().print();
+}
+
+
+Scene::~Scene()
+{
 }

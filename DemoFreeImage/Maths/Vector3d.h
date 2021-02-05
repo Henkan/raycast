@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 class Vector3d
 {
 private:
@@ -8,6 +10,7 @@ private:
 public:
 	Vector3d();
 	Vector3d(double x, double y, double z);
+	Vector3d(std::string x, std::string y, std::string z);
 	Vector3d(const Vector3d& other);
 
 	void normalize();

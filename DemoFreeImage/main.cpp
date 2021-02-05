@@ -4,6 +4,7 @@
 #include "Objects/Cube.h"
 #include "Objects/Sphere.h"
 #include "Objects/Plane.h"
+#include "Engine/Parser.h"
 
 /*
 math
@@ -56,6 +57,10 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));*/
 
+	Scene sceneTest = Parser::parseFileIntoScene("scene.txt");
+	sceneTest.render();
+
+	
 	/*=== CAMERA ===*/
 	double focal(1);
 	Vector3d cameraPosition(0, 0, 0);
@@ -74,7 +79,7 @@ int main(int argc, char** argv)
 
 	/*=== LIGHT SOURCES ===*/
 	//LightSource light(Vector3d(0, 10, 50));
-	LightSource light(Vector3d(0, 10, 50), Color(10, 10, 10));
+	LightSource light(Vector3d(0, 10, 50), Color(255, 255, 255));
 
 	/*=== OBJECTS ===*/
 	/*Sphere sphere(materialBlue, Vector3d(0, 0, 5), 1);
@@ -84,10 +89,10 @@ int main(int argc, char** argv)
 	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));*/
 	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));
 
-	Sphere sphere1(Material(Color(255, 0, 0), 0.3, 0.1, 0.3, 32), Vector3d(0, -1, 3), 1);
-	Sphere sphere2(Material(Color(0, 0, 255), 0.3, 0.3, 0.3, 50), Vector3d(2, 0, 4), 1);
-	Sphere sphere3(Material(Color(0, 255, 0), 0.3, 0.3, 0.3, 10), Vector3d(-2, 0, 4), 1);
-	Plane plane(Material(Color(255, 255, 0), 0.3, 0.3, 0.3, 32), Vector3d(0, -1, 0), Vector3d(0, 1, 0));
+	Sphere sphere1(materialBlue, Vector3d(0, -1, 3), 1);
+	Sphere sphere2(materialRed, Vector3d(2, 0, 4), 1);
+	Sphere sphere3(materialGreen, Vector3d(-2, 0, 4), 1);
+	Plane plane(materialGreen, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
 	//Sphere sphere4(Material(Color(255, 255, 0), 0.3, 0.3, 0.3, 100), Vector3d(0, -5001, 0), 5000);
 	
 	/*=== SCENE ===*/
@@ -100,7 +105,8 @@ int main(int argc, char** argv)
 	scene.addObject(&plane);
 	//scene.addObject(&planeHorizontal);
 	//scene.addObject(&planeVertical);
-	scene.render();
+	//scene.render();
 
+	
 	return EXIT_SUCCESS;
 }

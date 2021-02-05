@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 class Color
 {
 private :
@@ -10,6 +11,7 @@ private :
 public :
 	Color();
 	Color(int red, int green, int blue);
+	Color(std::string red, std::string green, std::string blue);
 	int getRed();
 	int getBlue();
 	int getGreen();

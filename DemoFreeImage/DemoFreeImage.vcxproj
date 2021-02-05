@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Plane.cpp" />
+    <ClCompile Include="Engine\Parser.cpp" />
     <ClCompile Include="Render\Color.cpp" />
     <ClCompile Include="Render\Ray.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Plane.h" />
+    <ClInclude Include="Engine\Parser.h" />
     <ClInclude Include="Render\Color.h" />
     <ClInclude Include="Render\Ray.h" />
     <ClInclude Include="Render\Camera.h" />

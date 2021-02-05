@@ -15,8 +15,17 @@ private:
 public:
 	Scene();
 	Scene(Camera camera);
+
+	void addCamera(Camera camera);
 	void addObject(Object3d* object);
+	void addObjects(std::vector<Object3d*> listObjects);
 	void addLightSource(LightSource* lightSource);
+	void addLightSources(std::vector<LightSource*> lightSourcesToAdd);
 	void render();
+
+	void printObjects();
+	void printLight();
+
+	~Scene();
 };
 

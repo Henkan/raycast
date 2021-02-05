@@ -1,22 +1,9 @@
 #include "Camera.h"
 #include <iostream>
 
-void Camera::initializePlanes()
-{
-	Vector3d farPoint = position + direction * farDistance;
-	Vector3d farNormal = farPoint.getDirection(position);
-	farNormal.normalize();
-	farPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), farPoint, farNormal);
-
-	Vector3d nearPoint = position + direction * nearDistance;
-	Vector3d nearNormal = position.getDirection(nearPoint);
-	nearNormal.normalize();
-	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
-}
-
 Camera::Camera()
 {
-	focal = 1;
+	/*focal = 1;
 	position = Vector3d(0, 0, 0);
 	direction = Vector3d(0, 0, 1);
 	nearDistance = 0.5;
@@ -24,7 +11,7 @@ Camera::Camera()
 	imageSize = 2;
 	resolution = std::pair<int, int>(640, 480);
 
-	initializePlanes();
+	initializePlanes();*/
 }
 
 Camera::Camera(Vector3d position, Vector3d direction, double focal, double nearDistance, double farDistance, double imageSize, std::pair<int, int> resolution)
@@ -73,6 +60,20 @@ std::pair<Object3d*, Vector3d> Camera::sendRay(Ray ray, std::vector<Object3d*> o
 	}
 	
 }
+
+void Camera::initializePlanes()
+{
+	Vector3d farPoint = position + direction * farDistance;
+	Vector3d farNormal = farPoint.getDirection(position);
+	farNormal.normalize();
+	farPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), farPoint, farNormal);
+
+	Vector3d nearPoint = position + direction * nearDistance;
+	Vector3d nearNormal = position.getDirection(nearPoint);
+	nearNormal.normalize();
+	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
+}
+
 
 Vector3d Camera::getPosition()
 {

@@ -34,3 +34,8 @@ std::pair<bool, Vector3d> Plane::doesRayIntersect(Ray ray)
 
 	return std::pair<bool, Vector3d>(false, Vector3d());
 }
+
+Color Plane::getColor()
+{
+	return material.getColor();
+}
