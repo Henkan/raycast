@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.h"
+#include "../Render/LightSource.h"
 class Material
 {
 private :
@@ -17,5 +18,8 @@ public :
 	double getAmbient();
 	double getSpecular();
 	double getShininess();
+	Color computeAmbient();
+	Color computeDiffuse(LightSource light, double attenuation, double dotProductResult);
+	Color computeSpecular(LightSource light, double attenuation, double dotProductResult);
 };
 

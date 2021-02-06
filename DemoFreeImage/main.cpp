@@ -57,10 +57,60 @@ int main(int argc, char** argv)
 	triangles.push_back(Triangle({ 2,6,8 }));
 	triangles.push_back(Triangle({ 2,8,4 }));*/
 
-	Scene sceneTest = Parser::parseFileIntoScene("scene.txt");
-	sceneTest.render();
+	bool useParser(true);
+	Scene scene;
+	if (useParser) {
+		scene = Parser::parseFileIntoScene("scene.txt");
+	}
+	else {
+		/*=== CAMERA ===*/
+		double focal(1);
+		Vector3d cameraPosition(0, 0, 0);
+		Vector3d cameraDirection(0, 0, 1);
+		double nearPlaneDistance(0.5);
+		double farPlaneDistance(100);
+		double imageSize(2);
+		std::pair<int, int> imageResolution(640, 480);
+		Camera camera(cameraPosition, cameraDirection, focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
 
-	sf::RenderWindow window(sf::VideoMode(sceneTest.getCamera().getResolution().first, sceneTest.getCamera().getResolution().second), "Raycasting woaw");
+		/*=== MATERIALS ===*/
+		Material materialBlue(Color(64, 141, 147), 0.1, 0.3, 0.3, 100);
+		Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
+		Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
+		Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10);
+
+		/*=== LIGHT SOURCES ===*/
+		//LightSource light(Vector3d(0, 10, 50));
+		LightSource light(Vector3d(0, 10, -30), Color(255, 255, 255));
+
+		/*=== OBJECTS ===*/
+		/*Sphere sphere(materialBlue, Vector3d(0, 0, 5), 1);
+		Sphere sphere2(materialGreen, Vector3d(0, 1.5, 4), 1);
+		//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
+		Plane planeHorizontal(materialLightgrey, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
+		Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));*/
+		Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));
+
+		Sphere sphere1(materialBlue, Vector3d(0, -1, 3), 1);
+		Sphere sphere2(materialRed, Vector3d(2, 0, 4), 1);
+		Sphere sphere3(materialGreen, Vector3d(-2, 0, 4), 1);
+		Plane plane(materialGreen, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
+		//Sphere sphere4(Material(Color(255, 255, 0), 0.3, 0.3, 0.3, 100), Vector3d(0, -5001, 0), 5000);
+
+		/*=== SCENE ===*/
+		Scene scene(camera);
+		scene.addLightSource(&light);
+		//scene.addObject(&sphere);
+		scene.addObject(&sphere1);
+		scene.addObject(&sphere2);
+		scene.addObject(&sphere3);
+		scene.addObject(&plane);
+		//scene.addObject(&planeHorizontal);
+		//scene.addObject(&planeVertical);
+	}
+	scene.render();
+	
+	sf::RenderWindow window(sf::VideoMode(scene.getCamera().getResolution().first, scene.getCamera().getResolution().second), "Raycasting woaw");
 	sf::Texture texture;
 	if (!texture.loadFromFile("out.bmp"))
 	{
@@ -84,53 +134,5 @@ int main(int argc, char** argv)
 		window.display();
 	}
 
-	
-	/*=== CAMERA ===*/
-	double focal(1);
-	Vector3d cameraPosition(0, 0, 0);
-	Vector3d cameraDirection(0, 0, 1);
-	double nearPlaneDistance(0.5);
-	double farPlaneDistance(100);
-	double imageSize(2);
-	std::pair<int, int> imageResolution(640, 480);
-	Camera camera(cameraPosition, cameraDirection, focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
-
-	/*=== MATERIALS ===*/
-	Material materialBlue(Color(64, 141, 147), 0.1, 0.3, 0.3, 100);
-	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
-	Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
-	Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10);
-
-	/*=== LIGHT SOURCES ===*/
-	//LightSource light(Vector3d(0, 10, 50));
-	LightSource light(Vector3d(0, 10, 50), Color(255, 255, 255));
-
-	/*=== OBJECTS ===*/
-	/*Sphere sphere(materialBlue, Vector3d(0, 0, 5), 1);
-	Sphere sphere2(materialGreen, Vector3d(0, 1.5, 4), 1);
-	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
-	Plane planeHorizontal(materialLightgrey, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
-	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));*/
-	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));
-
-	Sphere sphere1(materialBlue, Vector3d(0, -1, 3), 1);
-	Sphere sphere2(materialRed, Vector3d(2, 0, 4), 1);
-	Sphere sphere3(materialGreen, Vector3d(-2, 0, 4), 1);
-	Plane plane(materialGreen, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
-	//Sphere sphere4(Material(Color(255, 255, 0), 0.3, 0.3, 0.3, 100), Vector3d(0, -5001, 0), 5000);
-	
-	/*=== SCENE ===*/
-	Scene scene(camera);
-	scene.addLightSource(&light);
-	//scene.addObject(&sphere);
-	scene.addObject(&sphere1);
-	scene.addObject(&sphere2);
-	scene.addObject(&sphere3);
-	scene.addObject(&plane);
-	//scene.addObject(&planeHorizontal);
-	//scene.addObject(&planeVertical);
-	//scene.render();
-
-	
 	return EXIT_SUCCESS;
 }
