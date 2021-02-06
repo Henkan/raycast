@@ -13,6 +13,11 @@ void Scene::addCamera(Camera camera)
 	this->camera = camera;
 }
 
+Camera Scene::getCamera()
+{
+	return camera;
+}
+
 void Scene::addObject(Object3d* object)
 {
 	objects.push_back(object);

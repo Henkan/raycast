@@ -17,6 +17,7 @@ public:
 	Scene(Camera camera);
 
 	void addCamera(Camera camera);
+	Camera getCamera();
 	void addObject(Object3d* object);
 	void addObjects(std::vector<Object3d*> listObjects);
 	void addLightSource(LightSource* lightSource);

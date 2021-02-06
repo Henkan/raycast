@@ -5,7 +5,7 @@
 #include "Objects/Sphere.h"
 #include "Objects/Plane.h"
 #include "Engine/Parser.h"
-
+#include <SFML/Graphics.hpp>
 /*
 math
  - Vector3d
@@ -59,6 +59,30 @@ int main(int argc, char** argv)
 
 	Scene sceneTest = Parser::parseFileIntoScene("scene.txt");
 	sceneTest.render();
+
+	sf::RenderWindow window(sf::VideoMode(sceneTest.getCamera().getResolution().first, sceneTest.getCamera().getResolution().second), "Raycasting woaw");
+	sf::Texture texture;
+	if (!texture.loadFromFile("out.bmp"))
+	{
+		std::cout << "No.";
+		return 1;
+	}
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
 
 	
 	/*=== CAMERA ===*/
