@@ -1,10 +1,12 @@
 #include "Parser.h"
 #include "../Maths/Vector3d.h"
+#include <array>
 #include <utility>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include "../Objects/Sphere.h"
+#include "../Objects/Triangle.h"
 
 std::vector<std::string> Parser::splitString(const std::string& stringToParse, char delimiter) {
     std::vector<std::string> rep;
@@ -149,6 +151,34 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
                     }
                     listObjects.push_back(sphere);
 
+                }
+                else if (word == "Triangle") {
+                    std::array<Vector3d, 3> vertices;
+                    sceneFile >> word; //Vertex one
+                    std::vector<std::string> vertex = splitString(word, '*');
+                    vertices[0] = Vector3d(vertex[0],vertex[1],vertex[2]);
+
+                    sceneFile >> word; //Vertex two
+                    vertex = splitString(word, '*');
+                    vertices[1] = Vector3d(vertex[0], vertex[1], vertex[2]);
+
+                    sceneFile >> word; //Vertex three
+                    vertex = splitString(word, '*');
+                    vertices[2] = Vector3d(vertex[0], vertex[1], vertex[2]);
+                    
+                    sceneFile >> word; //Material
+                    Triangle* triangle;
+                    try {
+                        Triangle* triangleTmp = new Triangle(mapMaterials.at(word), vertices);
+                        triangle = triangleTmp;
+                    }
+                    catch (std::exception exception) {
+                        std::cerr << exception.what() << std::endl;
+                        std::cout << "Material " << word << " does not exist, replaced by default material.\n";
+                        Triangle* triangleTmp = new Triangle(defaultMaterial, vertices);
+                        triangle = triangleTmp;
+                    }
+                    listObjects.push_back(triangle);
                 }
                 
             }

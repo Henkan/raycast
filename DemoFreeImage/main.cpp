@@ -73,20 +73,15 @@ int main(int argc, char** argv)
 
 	/*=== MATERIALS ===*/
 	Material materialBlue(Color(64, 141, 147), 0.1, 0.3, 0.3, 100);
-	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
+	Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 100);
 	Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
 	Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10);
 
 	/*=== LIGHT SOURCES ===*/
 	//LightSource light(Vector3d(0, 10, 50));
-	LightSource light(Vector3d(0, 10, 50), Color(255, 255, 255));
+	LightSource light(Vector3d(0, 10, -30), Color(255, 255, 255));
 
 	/*=== OBJECTS ===*/
-	/*Sphere sphere(materialBlue, Vector3d(0, 0, 5), 1);
-	Sphere sphere2(materialGreen, Vector3d(0, 1.5, 4), 1);
-	//Cube cube(materialRed,Vector3d(0,0,1),vertices, triangles);
-	Plane planeHorizontal(materialLightgrey, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
-	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));*/
 	Plane planeVertical(materialLightgrey, Vector3d(0, 0, 10), Vector3d(0, 0, -1));
 
 	Sphere sphere1(materialBlue, Vector3d(0, -1, 3), 1);
@@ -94,17 +89,28 @@ int main(int argc, char** argv)
 	Sphere sphere3(materialGreen, Vector3d(-2, 0, 4), 1);
 	Plane plane(materialGreen, Vector3d(0, -1, 0), Vector3d(0, 1, 0));
 	//Sphere sphere4(Material(Color(255, 255, 0), 0.3, 0.3, 0.3, 100), Vector3d(0, -5001, 0), 5000);
-	
+	std::array<Vector3d, 3> vertices;
+	vertices[0] = Vector3d(0, -1, 7);
+	vertices[1] = Vector3d(-1, -0.99999, 2);
+	vertices[2] = Vector3d(1, -1, 2);
+	Triangle triangle(materialRed, vertices);
+	Sphere sphere4(materialRed, Vector3d(0, -1, 7), 0.5);
+	Sphere sphere5(materialRed, Vector3d(-1, -1, 2), 0.5);
+	Sphere sphere6(materialRed, Vector3d(1, -1, 2), 0.5);
 	/*=== SCENE ===*/
 	Scene scene(camera);
 	scene.addLightSource(&light);
 	//scene.addObject(&sphere);
-	scene.addObject(&sphere1);
-	scene.addObject(&sphere2);
-	scene.addObject(&sphere3);
-	scene.addObject(&plane);
+	//scene.addObject(&sphere1);
+	//scene.addObject(&sphere2);
+	//scene.addObject(&sphere3);
+	//scene.addObject(&plane);
 	//scene.addObject(&planeHorizontal);
 	//scene.addObject(&planeVertical);
+	scene.addObject(&triangle);
+	//scene.addObject(&sphere4);
+	//scene.addObject(&sphere5);
+	//scene.addObject(&sphere6);
 	//scene.render();
 
 	
