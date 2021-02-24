@@ -28,6 +28,11 @@ Color Color::operator+(int other)
 	return Color(red + other, green + other, blue + other);
 }
 
+Color Color::operator*(double factor)
+{
+	return Color(red * factor, green * factor, blue * factor);
+}
+
 void Color::print() {
 	std::cout << red << " " << green << " " << blue << "\n";
 }

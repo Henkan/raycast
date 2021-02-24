@@ -18,6 +18,7 @@ public :
 	void correctRange();
 	Color operator+(const Color& other);
 	Color operator+(int other);
+	Color operator*(double factor);
 	void print();
 };
 

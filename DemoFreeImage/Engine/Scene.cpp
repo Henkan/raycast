@@ -44,19 +44,19 @@ void Scene::render()
 	FIBITMAP* image;
 	image = FreeImage_Allocate(camera.getResolution().first, camera.getResolution().second, 32);
 
-	std::pair<int,int> resolution = camera.getResolution();
+	std::pair<int, int> resolution = camera.getResolution();
 	double imageSize(camera.getImageSize());
 	Vector3d position(camera.getPosition());
 	Vector3d direction(camera.getDirection());
 	double focal(camera.getFocal());
 
-	double imageSizeHeight = (resolution.second * imageSize/ resolution.first);
+	double imageSizeHeight = (resolution.second * imageSize / resolution.first);
 	Vector3d topLeftCorner((position.getX() - imageSize / 2), position.getY() + imageSizeHeight / 2, position.getZ() + direction.getZ() * focal);
 	for (int x = 0; x < resolution.first; ++x) {
 		for (int y = 0; y < resolution.second; ++y) {
 
 			Vector3d pixelPosition(topLeftCorner.getX() + x * imageSize / resolution.first, topLeftCorner.getY() - y * imageSizeHeight / resolution.second, topLeftCorner.getZ());
-			
+
 			std::pair<Object3d*, Vector3d> objectAndPosCollided(camera.sendRay(Ray(Vector3d(position), position.getDirection(pixelPosition)), objects));
 			Object3d* objectCollided(objectAndPosCollided.first);
 			Vector3d collisionPoint(objectAndPosCollided.second);
@@ -64,7 +64,7 @@ void Scene::render()
 			if (objectCollided != nullptr) {
 
 				Material matObject(objectCollided->getMaterial());
-				
+
 				Vector3d dirCameraNorm(collisionPoint.getDirection(camera.getPosition()));
 				dirCameraNorm.normalize();
 
@@ -72,36 +72,56 @@ void Scene::render()
 				surfaceNormaleNorm.normalize();
 
 				Color ambient(matObject.computeAmbient());
-				Color pixelColor(ambient);
+				Color pixelColor;
 
 				for (auto light : lightSources) {
 
 					Vector3d dirTowardsLightNorm(collisionPoint.getDirection(light->getPosition()));
 					dirTowardsLightNorm.normalize();
-					
-					Ray rayToLight(collisionPoint, dirTowardsLightNorm); //Secondary ray
-					std::vector<Object3d*> otherObjets(objects);
-					// Find the object where the collision happened and remove it to avoid autocollision
-					auto it = std::find(otherObjets.begin(), otherObjets.end(), objectCollided); 
-					if (it != otherObjets.end()) {
-						otherObjets.erase(it);
-					}
+
+					// Move slightly the origin of the ray to avoid having a collision with itself
+					Vector3d rayToLightStartPoint(collisionPoint + dirTowardsLightNorm * 0.01);
+					Ray rayToLight(rayToLightStartPoint, dirTowardsLightNorm); //Secondary ray
 					// If there is an object blocking light, skip light effect
-					if (camera.sendRay(rayToLight, otherObjets).first != nullptr) {
+					if (camera.sendRay(rayToLight, objects).first != nullptr) {
 						continue;
 					}
+
 					Vector3d lightReflectionNorm(dirTowardsLightNorm.getReflected(surfaceNormaleNorm));
 					lightReflectionNorm.normalize();
 
 					Vector3d medianDirCamLight((dirTowardsLightNorm + dirCameraNorm) / (dirTowardsLightNorm + dirCameraNorm).getNorm());
 					double attenuationFunction(1 / (light->getPosition().getDirection(collisionPoint).getLength()));
-					
+
+					// Compute light effect on color
 					Color diffuse(matObject.computeDiffuse(*light, attenuationFunction, surfaceNormaleNorm.dotProduct(dirTowardsLightNorm)));
 					Color specular(matObject.computeSpecular(*light, attenuationFunction, surfaceNormaleNorm.dotProduct(medianDirCamLight)));
 
-					pixelColor = pixelColor + specular + diffuse;
-				}
+					// Reflection
+					Vector3d reflectedRayDir = position.getDirection(collisionPoint) + (surfaceNormaleNorm * 2 * (-position.getDirection(collisionPoint).dotProduct(surfaceNormaleNorm)));
 
+					// Move slightly the origin of the ray to avoid collision
+					Ray reflectedRay(collisionPoint + reflectedRayDir * 0.001, reflectedRayDir);
+
+					std::vector<Object3d*> otherObjets(objects);
+					auto it = std::find(otherObjets.begin(), otherObjets.end(), objectCollided);
+					if (it != otherObjets.end()) {
+						otherObjets.erase(it);
+					}
+					Object3d* reflectedObject = camera.sendRay(reflectedRay, otherObjets).first;
+
+					Color reflectedAmbient;
+					if (reflectedObject != nullptr) {
+						reflectedAmbient = Color(reflectedObject->getMaterial().computeAmbient());
+					}
+					else {
+						reflectedAmbient = Color(0, 0, 0);
+					}
+					double red = ambient.getRed() * (1.0 - matObject.getReflectivity()) + (reflectedAmbient.getRed() * matObject.getReflectivity());
+					double green = ambient.getGreen() * (1.0 - matObject.getReflectivity()) + reflectedAmbient.getGreen() * matObject.getReflectivity();
+					double blue = ambient.getBlue() * (1.0 - matObject.getReflectivity()) + reflectedAmbient.getBlue() * matObject.getReflectivity();
+					pixelColor = pixelColor + Color(red, green, blue) + specular + (diffuse * (1.0 - matObject.getReflectivity()));
+				}
 				pixelColor.correctRange();
 				color.rgbRed = pixelColor.getRed();
 				color.rgbGreen = pixelColor.getGreen();
@@ -120,7 +140,7 @@ void Scene::render()
 
 void Scene::printObjects()
 {
-	std::cout << objects[0]->getMaterial().getColor().getBlue()<< std::endl;
+	std::cout << objects[0]->getMaterial().getColor().getBlue() << std::endl;
 }
 
 void Scene::printLight()

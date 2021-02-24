@@ -66,12 +66,12 @@ void Camera::initializePlanes()
 	Vector3d farPoint = position + direction * farDistance;
 	Vector3d farNormal = farPoint.getDirection(position);
 	farNormal.normalize();
-	farPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), farPoint, farNormal);
+	farPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0, 0), farPoint, farNormal);
 
 	Vector3d nearPoint = position + direction * nearDistance;
 	Vector3d nearNormal = position.getDirection(nearPoint);
 	nearNormal.normalize();
-	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0), nearPoint, nearNormal);
+	nearPlane = Plane(Material(Color(0, 0, 0), 0, 0, 0, 0, 0), nearPoint, nearNormal);
 }
 
 

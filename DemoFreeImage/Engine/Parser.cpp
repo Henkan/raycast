@@ -32,7 +32,7 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
 
             Camera camera(Vector3d(0, 0, 0), Vector3d(0, 0, 1), 1, 0.5, 100, 2, std::pair<int, int>(640, 480));
             LightSource* defaultLight = new LightSource(Vector3d(0, 0, 0), Color(255, 255, 255));
-            Material defaultMaterial(Color(255, 255, 255), 0.3, 0.3, 0.3, 0.3);
+            Material defaultMaterial(Color(255, 255, 255), 0.3, 0.3, 0.3, 0.3, 0.0);
 
             std::vector<Object3d*> listObjects;
             std::vector<LightSource*> listLights;
@@ -101,8 +101,11 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
 
                     sceneFile >> word; //shininess
                     double shininess(std::stod(word));
+
+                    sceneFile >> word; //reflectivity
+                    double reflectivity(std::stod(word));
                     
-                    mapMaterials.insert({ name, Material(color, diffuse, ambient, specular, shininess) });
+                    mapMaterials.insert({ name, Material(color, diffuse, ambient, specular, shininess, reflectivity) });
                 }
                 else if (word == "Plane") {
                     sceneFile >> word; //Position

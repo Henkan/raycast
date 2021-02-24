@@ -2,7 +2,7 @@
 
 Material::Material() {}
 
-Material::Material(Color color, double diffuse, double ambient, double specular, double shininess) : color(color), diffuse(diffuse), ambient(ambient), specular(specular), shininess(shininess) {}
+Material::Material(Color color, double diffuse, double ambient, double specular, double shininess, double reflectivity) : color(color), diffuse(diffuse), ambient(ambient), specular(specular), shininess(shininess), reflectivity(reflectivity) {}
 
 Color Material::getColor()
 {
@@ -26,6 +26,10 @@ double Material::getSpecular()
 
 double Material::getShininess() {
 	return shininess;
+}
+
+double Material::getReflectivity() {
+	return reflectivity;
 }
 
 Color Material::computeAmbient()

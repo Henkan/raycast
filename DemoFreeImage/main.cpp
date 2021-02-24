@@ -74,10 +74,10 @@ int main(int argc, char** argv)
 		Camera camera(cameraPosition, cameraDirection, focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
 
 		/*=== MATERIALS ===*/
-		Material materialBlue(Color(64, 141, 147), 0.1, 0.3, 0.3, 100);
-		Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50);
-		Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100);
-		Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10);
+		Material materialBlue(Color(64, 141, 147), 0.1, 0.3, 0.3, 100, 0.0);
+		Material materialRed(Color(255, 0, 0), 0.3, 0.3, 0.3, 50, 0);
+		Material materialGreen(Color(7, 163, 46), 0.3, 0.3, 0.3, 100, 0);
+		Material materialLightgrey(Color(166, 166, 166), 0.3, 0.3, 0.3, 10, 0);
 
 		/*=== LIGHT SOURCES ===*/
 		//LightSource light(Vector3d(0, 10, 50));
