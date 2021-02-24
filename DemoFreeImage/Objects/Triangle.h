@@ -1,16 +1,23 @@
 #pragma once
 #include <array>
 #include "../Maths/Vector3d.h"
+#include "../Render/Ray.h"
+#include "../Render/Color.h"
+#include "Object3d.h"
 
-class Triangle
+class Triangle : public Object3d
 {
 private:
-	std::array < int,3 > vertices; //index 
-	std::array<int, 3> textures;
-	std::array<int, 3> normal;
+	std::array<Vector3d, 3> vertices;
+	Vector3d normal;
 
 public:
 	Triangle();
-	Triangle(std::array<int,3> vertices);
+	Triangle(Material material, std::array<Vector3d,3> vertices);
+	Vector3d getNormalVectorOfSurface(Vector3d positionOnSurface);
+	Vector3d getNormal();
+	std::pair<bool, Vector3d> doesRayIntersect(Ray ray);
+
+	Color getColor();
 };
 

@@ -83,11 +83,17 @@ void Scene::render()
 					Vector3d rayToLightStartPoint(collisionPoint + dirTowardsLightNorm * 0.01);
 					Ray rayToLight(rayToLightStartPoint, dirTowardsLightNorm); //Secondary ray
 					// If there is an object blocking light, skip light effect
-					if (camera.sendRay(rayToLight, objects).first != nullptr) {
-						continue;
+					std::pair<Object3d*, Vector3d> result = camera.sendRay(rayToLight, otherObjets);
+					Object3d* blockingObject = result.first;
+					Vector3d intersectionRayBlockingObject = result.second;
+					if (blockingObject != nullptr) {
+						// If objects are far enough, skip light effect
+						if (abs((rayToLight.getPosition() - intersectionRayBlockingObject).getLength()) > 0.1) {
+							continue;
+						}
 					}
-
-					Vector3d lightReflectionNorm(dirTowardsLightNorm.getReflected(surfaceNormaleNorm));
+					
+					Vector3d lightReflectionNorm = dirTowardsLightNorm.getReflected(surfaceNormaleNorm);
 					lightReflectionNorm.normalize();
 
 					Vector3d medianDirCamLight((dirTowardsLightNorm + dirCameraNorm) / (dirTowardsLightNorm + dirCameraNorm).getNorm());
