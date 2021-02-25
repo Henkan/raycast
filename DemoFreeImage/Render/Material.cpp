@@ -48,7 +48,7 @@ Color Material::computeDiffuse(LightSource light, double attenuation, double dot
 
 Color Material::computeSpecular(LightSource light, double attenuation, double dotProductResult)
 {
-	return Color((int)(75 * this->specular * attenuation * light.getColor().getRed() * pow(dotProductResult, this->shininess)),
-		(int)(75 * this->specular * attenuation * light.getColor().getGreen() * pow(dotProductResult, this->shininess)),
-		(int)(75 * this->specular * attenuation * light.getColor().getBlue() * pow(dotProductResult, this->shininess)));
+	return Color((int)(30 * this->specular * attenuation * light.getColor().getRed() * pow(dotProductResult, this->shininess)),
+		(int)(30 * this->specular * attenuation * light.getColor().getGreen() * pow(dotProductResult, this->shininess)),
+		(int)(30 * this->specular * attenuation * light.getColor().getBlue() * pow(dotProductResult, this->shininess)));
 }

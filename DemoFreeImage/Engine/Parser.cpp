@@ -187,10 +187,7 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
             }
 
             Scene scene(camera);
-            if (listLights.empty()) {
-                scene.addLightSource(defaultLight);
-            }
-            else {
+            if (!listLights.empty()) {
                 scene.addLightSources(listLights);
             }
             
