@@ -1,8 +1,5 @@
 #include "LightSource.h"
 
-LightSource::LightSource()
-{
-}
 
 LightSource::LightSource(Vector3d position) : position(position), color(Color(255,255,255)) {}
 

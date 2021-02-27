@@ -1,19 +1,6 @@
 #include "Camera.h"
 #include <iostream>
 
-Camera::Camera()
-{
-	/*focal = 1;
-	position = Vector3d(0, 0, 0);
-	direction = Vector3d(0, 0, 1);
-	nearDistance = 0.5;
-	farDistance = 100;
-	imageSize = 2;
-	resolution = std::pair<int, int>(640, 480);
-
-	initializePlanes();*/
-}
-
 Camera::Camera(Vector3d position, Vector3d direction, double focal, double nearDistance, double farDistance, double imageSize, std::pair<int, int> resolution)
 	: position(position), direction(direction), focal(focal), nearDistance(nearDistance), farDistance(farDistance), imageSize(imageSize), resolution(resolution)
 {

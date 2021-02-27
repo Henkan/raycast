@@ -1,5 +1,4 @@
 #include "Triangle.h"
-#include <iostream>
 
 Triangle::Triangle(Material material, std::array<Vector3d, 3> vertices): Object3d(material, vertices[0]), vertices(vertices)
 {

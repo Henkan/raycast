@@ -21,13 +21,7 @@
     <ClCompile Include="Maths\Vector3d.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Maths\Matrix.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Sphere.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Cube.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Scene.cpp">
@@ -62,16 +56,10 @@
     <ClInclude Include="Maths\Vector3d.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Maths\Matrix.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClCompile Include="Objects\Object3d.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClInclude Include="Objects\Sphere.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Cube.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Scene.h">

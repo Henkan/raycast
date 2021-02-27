@@ -158,10 +158,8 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\LightSource.cpp" />
     <ClCompile Include="Render\Material.cpp" />
-    <ClCompile Include="Objects\Cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maths\Vector3d.cpp" />
-    <ClCompile Include="Maths\Matrix.cpp" />
     <ClCompile Include="Objects\Sphere.cpp" />
     <ClCompile Include="Engine\Scene.cpp" />
     <ClCompile Include="Objects\Triangle.cpp" />
@@ -174,9 +172,7 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\LightSource.h" />
     <ClInclude Include="Render\Material.h" />
-    <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Maths\Vector3d.h" />
-    <ClInclude Include="Maths\Matrix.h" />
     <ClCompile Include="Objects\Object3d.cpp" />
     <ClInclude Include="Objects\Sphere.h" />
     <ClInclude Include="Engine\Scene.h" />

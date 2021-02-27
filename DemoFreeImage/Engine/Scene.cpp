@@ -2,10 +2,6 @@
 #include <iostream>
 #include <FreeImage.h>
 
-Scene::Scene()
-{
-}
-
 Scene::Scene(Camera camera) : camera(camera), objects(std::vector<Object3d*>()), lightSources(std::vector<LightSource*>()) {}
 
 void Scene::addCamera(Camera camera)
@@ -189,4 +185,12 @@ void Scene::printLight()
 
 Scene::~Scene()
 {
+	for (auto object : objects) {
+		delete object;
+	}
+	objects.clear();
+	for (auto light : lightSources) {
+		delete light;
+	}
+	lightSources.clear();
 }

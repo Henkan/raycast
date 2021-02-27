@@ -1,5 +1,4 @@
 #include "Sphere.h"
-#include <iostream>
 
 Sphere::Sphere(Material material, Vector3d center, double radius) : Object3d(material, center), radius(radius){}
 

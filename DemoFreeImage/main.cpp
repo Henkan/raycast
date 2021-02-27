@@ -1,7 +1,9 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
+
 #include "FreeImage.h"
 #include "Engine/Scene.h"
-#include "Objects/Cube.h"
 #include "Objects/Sphere.h"
 #include "Objects/Plane.h"
 #include "Engine/Parser.h"
@@ -9,7 +11,7 @@
 
 int main(int argc, char** argv)
 {
-	bool useParser(true);
+	bool useParser(false);
 	Scene scene;
 	if (argc == 2) {
 		// Using parser
@@ -17,9 +19,8 @@ int main(int argc, char** argv)
 	}
 	
 	if (useParser) {
-		//std::cout << "Reading scene from " << argv[1] << "...\n";
-		//scene = Parser::parseFileIntoScene(argv[1]);
-		scene = Parser::parseFileIntoScene("scene.txt");
+		std::cout << "Reading scene from " << argv[1] << "...\n";
+		scene = Parser::parseFileIntoScene(argv[1]);
 	}
 	else {
 		std::cout << "Generating default scene...\n";
@@ -61,7 +62,7 @@ int main(int argc, char** argv)
 	}
 	std::cout << "Rendering...\n";
 	scene.render();
-	
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	sf::RenderWindow window(sf::VideoMode(scene.getCamera().getResolution().first, scene.getCamera().getResolution().second), "Raycasting woaw");
 	sf::Texture texture;
 	if (!texture.loadFromFile("out.bmp"))

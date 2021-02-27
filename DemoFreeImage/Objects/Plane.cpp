@@ -1,7 +1,4 @@
 #include "Plane.h"
-#include <iostream>
-
-Plane::Plane(){}
 
 Plane::Plane(Material material, Vector3d position, Vector3d normal) : Object3d(material, position) {
 	this->normal = normal;

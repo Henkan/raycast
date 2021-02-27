@@ -7,7 +7,7 @@ private:
 	Vector3d position;
 	Color color;
 public:
-	LightSource();
+	LightSource() = default;
 	LightSource(Vector3d position);
 	LightSource(Vector3d position, Color color);
 	Color getColor();

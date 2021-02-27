@@ -12,7 +12,7 @@ private :
 	double reflectivity;
 
 public :
-	Material();
+	Material() = default;
 	Material(Color color, double diffuse, double ambient, double specular, double shininess, double reflectivity);
 	Color getColor();
 	double getDiffuse();

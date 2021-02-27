@@ -6,7 +6,7 @@ Vector3d::Vector3d() : x(0), y(0), z(0) {}
 
 Vector3d::Vector3d(double x, double y, double z) : x(x), y(y), z(z) {}
 
-Vector3d::Vector3d(std::string x, std::string y, std::string z) : x(std::stoi(x)), y(std::stoi(y)), z(std::stoi(z)){}
+Vector3d::Vector3d(std::string x, std::string y, std::string z) : x(std::stod(x)), y(std::stod(y)), z(std::stod(z)){}
 
 Vector3d::Vector3d(const Vector3d& other) : x(other.x), y(other.y), z(other.z) {}
 

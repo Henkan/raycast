@@ -49,10 +49,6 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
                     std::vector<std::string> position = splitString(word, '*');
                     Vector3d cameraPosition(position[0], position[1], position[2]);
 
-                    sceneFile >> word; //Direction
-                    std::vector<std::string> direction = splitString(word, '*');
-                    Vector3d cameraDirection(direction[0], direction[1],direction[2]);
-
                     sceneFile >> word; //Focal
                     double focal(std::stod(word));
 
@@ -69,7 +65,7 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
                     std::vector<std::string> resolution = splitString(word, '*');
                     std::pair<int, int> imageResolution(std::stoi(resolution[0]), std::stoi(resolution[1]));
 
-                    Camera cameraTmp(cameraPosition, cameraDirection, focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
+                    Camera cameraTmp(cameraPosition, Vector3d(0,0,1), focal, nearPlaneDistance, farPlaneDistance, imageSize, imageResolution);
                     camera = cameraTmp;
                 }
                 else if (word == "Light") {
@@ -201,7 +197,7 @@ Scene Parser::parseFileIntoScene(const std::string& fileName) {
     }
     catch (std::string const& chaine) {
         std::cerr << chaine << std::endl;
-        return Scene();
+        exit;
     } 
 }
 

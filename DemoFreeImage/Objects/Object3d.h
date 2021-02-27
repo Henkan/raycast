@@ -13,13 +13,11 @@ protected :
 
 
 public :
-	Object3d();
+	Object3d() = default;
 	Object3d(Material material, Vector3d position);
 	Vector3d getPosition();
 	Material getMaterial();
 	virtual Vector3d getNormalVectorOfSurface(Vector3d positionOnSurface) = 0;
 	virtual std::pair<bool, Vector3d> doesRayIntersect(Ray ray) = 0;
-
-
 };
 

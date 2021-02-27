@@ -13,7 +13,7 @@ private:
 	std::vector<LightSource*> lightSources;
 
 public:
-	Scene();
+	Scene() = default;
 	Scene(Camera camera);
 
 	void addCamera(Camera camera);

@@ -9,7 +9,7 @@ private:
 	Vector3d normal;
 
 public:
-	Plane();
+	Plane() = default;
 	Plane(Material material, Vector3d position, Vector3d normal);
 	Vector3d getNormalVectorOfSurface(Vector3d positionOnSurface);
 	Vector3d getNormal();
